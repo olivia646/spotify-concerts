@@ -2,6 +2,7 @@
 
 import os
 from flask import Flask, render_template, redirect, request, session, url_for
+from werkzeug.middleware.proxy_fix import ProxyFix
 from dotenv import load_dotenv
 
 import spotify
@@ -12,9 +13,16 @@ load_dotenv()
 app = Flask(__name__)
 app.secret_key = os.environ.get("FLASK_SECRET_KEY", "dev-secret-key")
 
+# Fix for running behind a proxy (Render, Heroku, etc.)
+app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
+
 
 def get_redirect_uri():
     """Get the OAuth redirect URI."""
+    # Use environment variable if set, otherwise auto-detect
+    base_url = os.environ.get("BASE_URL")
+    if base_url:
+        return f"{base_url}/callback"
     return url_for("callback", _external=True)
 
 
