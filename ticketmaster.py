@@ -46,7 +46,7 @@ def find_attraction_id(artist_name: str) -> Optional[str]:
 
 def search_concerts_by_attraction(attraction_id: str, city: str = "San Francisco") -> list:
     """
-    Search for concerts by attraction ID in a specific city.
+    Search for concerts by attraction ID within 20 miles of a city.
     """
     api_key = os.environ["TICKETMASTER_API_KEY"]
 
@@ -54,6 +54,8 @@ def search_concerts_by_attraction(attraction_id: str, city: str = "San Francisco
         "apikey": api_key,
         "attractionId": attraction_id,
         "city": city,
+        "radius": 20,
+        "unit": "miles",
         "classificationName": "Music",
         "size": 10,
         "sort": "date,asc",
@@ -115,7 +117,7 @@ def search_concerts_by_attraction(attraction_id: str, city: str = "San Francisco
     return events
 
 
-def find_concerts_for_artists(artists: list, city: str = "San Francisco", max_artists: int = 30) -> list:
+def find_concerts_for_artists(artists: list, city: str = "San Francisco", max_artists: int = 50) -> list:
     """
     Search for concerts for a list of artists.
 
