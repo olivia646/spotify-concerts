@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}Your Concerts - Spotify Concert Finder{% endblock %}
+
+{% block content %}
+<div class="concerts-header">
+    <h1>Upcoming Concerts</h1>
+    <p class="subtitle">Based on your top {{ artist_count }} artists</p>
+    <form class="city-form" action="{{ url_for('concerts') }}" method="get">
+        <input type="text" name="city" value="{{ city }}" placeholder="Enter city" class="city-input">
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+</div>
+
+{% if error %}
+<div class="error-message">
+    {{ error }}
+</div>
+{% endif %}
+
+{% if concerts %}
+<div class="concert-grid">
+    {% for concert in concerts %}
+    <a href="{{ concert.url }}" target="_blank" rel="noopener" class="concert-card-link">
+        <div class="concert-card">
+            {% if concert.artist.image_url %}
+            <div class="concert-image" style="background-image: url('{{ concert.artist.image_url }}')"></div>
+            {% elif concert.image_url %}
+            <div class="concert-image" style="background-image: url('{{ concert.image_url }}')"></div>
+            {% else %}
+            <div class="concert-image concert-image-placeholder"></div>
+            {% endif %}
+            <div class="concert-details">
+                <h3 class="concert-artist">{{ concert.artist.name }}</h3>
+                <p class="concert-name">{{ concert.name }}</p>
+                <p class="concert-date">{{ concert.date }}</p>
+                <p class="concert-venue">{{ concert.venue }}</p>
+                <span class="btn btn-tickets">Get Tickets</span>
+            </div>
+        </div>
+    </a>
+    {% endfor %}
+</div>
+{% else %}
+<div class="no-concerts">
+    <h2>No upcoming concerts found</h2>
+    <p>We couldn't find any upcoming {{ city }} concerts from your top artists.</p>
+    <p>Try a different city or check back later!</p>
+</div>
+{% endif %}
+{% endblock %}
