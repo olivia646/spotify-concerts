@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Spotify Concert Finder{% endblock %}</title>
+    <title>{% block title %}Olivia's Concert Finder{% endblock %}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <header>
         <nav>
-            <a href="{{ url_for('index') }}" class="logo">Concert Finder</a>
+            <a href="{{ url_for('index') }}" class="logo">Olivia's Concert Finder</a>
             {% if session.get('access_token') %}
             <a href="{{ url_for('logout') }}" class="nav-link">Logout</a>
             {% endif %}
