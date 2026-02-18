@@ -5,7 +5,7 @@
 {% block content %}
 <div class="concerts-header">
     <h1>Upcoming Concerts</h1>
-    <p class="subtitle">Based on your top {{ artist_count }} artists</p>
+    <p class="subtitle">Based on your Spotify listening history</p>
     <form class="city-form" action="{{ url_for('concerts') }}" method="get">
         <input type="text" name="city" value="{{ city }}" placeholder="Enter city" class="city-input">
         <button type="submit" class="btn btn-primary">Search</button>
