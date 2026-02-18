@@ -117,7 +117,7 @@ def search_concerts_by_attraction(attraction_id: str, city: str = "San Francisco
     return events
 
 
-def find_concerts_for_artists(artists: list, city: str = "San Francisco", max_artists: int = 50) -> list:
+def find_concerts_for_artists(artists: list, city: str = "San Francisco", max_artists: int = 25) -> list:
     """
     Search for concerts for a list of artists.
 
@@ -138,7 +138,7 @@ def find_concerts_for_artists(artists: list, city: str = "San Francisco", max_ar
     for i, artist in enumerate(artists_to_search):
         # Rate limit: wait between requests
         if i > 0:
-            time.sleep(0.25)
+            time.sleep(0.15)
 
         artist_name = artist["name"]
 
@@ -149,7 +149,7 @@ def find_concerts_for_artists(artists: list, city: str = "San Francisco", max_ar
             if not attraction_id:
                 continue
 
-            time.sleep(0.25)  # Rate limit between calls
+            time.sleep(0.15)  # Rate limit between calls
 
             # Then search for events by attraction ID
             concerts = search_concerts_by_attraction(attraction_id, city)
